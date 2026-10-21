@@ -1,0 +1,38 @@
+name: Portfolio checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install application dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+        working-directory: portfolio-app
+
+      - name: Compile Python modules
+        run: python -m compileall -q app.py config.py portfolio
+        working-directory: portfolio-app
+
+      - name: Smoke-test homepage and health endpoint
+        run: >-
+          python -c "from app import app; client = app.test_client();
+          assert client.get('/').status_code == 200;
+          assert client.get('/health').status_code == 200;
+          print('Homepage and health checks passed')"
+        working-directory: portfolio-app
