@@ -3,9 +3,12 @@ import os
 import secrets
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
-INSTANCE_DIR = BASE_DIR / "instance"
-MEDIA_DIR = INSTANCE_DIR / "media"
-DB_PATH = INSTANCE_DIR / "portfolio.sqlite3"
+# Optional override for hosts with a persistent disk (e.g. Render: /data).
+# Everything stateful (database, secret key, uploads) lives in this one tree.
+DATA_DIR = Path(os.environ.get("PORTFOLIO_DATA_DIR", "")) if os.environ.get("PORTFOLIO_DATA_DIR") else BASE_DIR / "instance"
+INSTANCE_DIR = DATA_DIR
+MEDIA_DIR = DATA_DIR / "media"
+DB_PATH = DATA_DIR / "portfolio.sqlite3"
 
 def _load_secret_key():
     """Prefer the environment variable; otherwise persist a random key so

@@ -2,8 +2,9 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
-instance/*.sqlite3
-instance/*.db
+instance/*.sqlite*
+instance/*.db*
+instance/*.bak
 instance/*.key
 instance/secret_key
 media/
@@ -13,5 +14,4 @@ media/
 .env
 .env.*
 *.env
-# Backups of the private database are also local-only
-instance/*.sqlite3-*
+*.bak-pre-render
