@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+instance/*.sqlite3
+instance/*.db
+instance/*.key
+instance/secret_key
+media/
+.pytest_cache/
+.coverage
+# Environment/secret files — never commit
+.env
+.env.*
+*.env
+# Backups of the private database are also local-only
+instance/*.sqlite3-*
